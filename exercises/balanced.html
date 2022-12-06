@@ -1,0 +1,58 @@
+<script>
+  function isBalanced(string) {
+    /*
+    map = {
+      braces: [0, 0],
+      curveBraces: [0, 0],
+      quadBraces: [0, 0]
+    }
+    */
+    const first = string[0]
+    if (first === ')' || first === '}' || first === ']') {
+      return false
+    }
+    
+    const allBraces = []
+    string.split('').forEach(symbol => {
+      if (
+        symbol === '(' || 
+        symbol === ')' ||
+        symbol === '{' ||
+        symbol === '}' ||
+        symbol === '[' ||
+        symbol === ']'
+      ) {
+        allBraces.push(symbol)
+      }
+    })
+    
+    let flag = true
+    const checker = []
+    allBraces.forEach(brace => {
+      if (
+        brace === '(' ||
+        brace === '{' ||
+        brace === '['
+      ) {
+        checker.push(brace)
+        return
+      }
+     
+      poped = checker.pop()
+      if (
+        poped + brace !== '()' &&
+        poped + brace !== '{}' &&
+        poped + brace !== '[]'
+      ) {
+        flag = false
+        return
+      }
+    })
+    return flag
+  }
+  
+  console.log(isBalanced('(x + 2) - [3]'))
+  console.log(isBalanced('(({[{}]}))'))
+  console.log(isBalanced('(2 + 7{)}'))
+  console.log(isBalanced('2 - (([]}}'))
+</script>

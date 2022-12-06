@@ -1,0 +1,32 @@
+<script>
+function arrayGenerator(min, max, n) {
+  const array = [];
+  for (let i = 0; i < n; i++) {
+    randomNumber = Math.round(Math.random() * (max - min) + min)
+    array.push(randomNumber)
+  }
+  return array
+}
+
+function operate(array) {
+  mapedArray = array.map(el => {
+    return el**2
+  })
+
+  filteredArray = array.filter(el => {
+    return !(el%2)
+  })
+  
+  return [array, mapedArray, filteredArray]
+}
+
+function render(array, mapedArray, filteredArray) {
+  console.log('Array:', array)
+  console.log('Maped:', mapedArray)
+  console.log('Filtered:', filteredArray)
+}
+
+let array, mapedArray, filteredArray
+[array, mapedArray, filteredArray] = operate(arrayGenerator(1, 10, 10))
+render(array, mapedArray, filteredArray)
+</script>
