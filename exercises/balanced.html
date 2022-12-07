@@ -48,11 +48,11 @@
         return
       }
     })
-    return flag
+    return flag && !checker.length
   }
   
   console.log(isBalanced('(x + 2) - [3]'))
-  console.log(isBalanced('(({[{}]}))'))
+  console.log(isBalanced('(({[{}]}))('))
   console.log(isBalanced('(2 + 7{)}'))
   console.log(isBalanced('2 - (([]}}'))
 </script>
