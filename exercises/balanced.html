@@ -7,21 +7,16 @@
       quadBraces: [0, 0]
     }
     */
+    const map = '({[)}]'
+    
     const first = string[0]
-    if (first === ')' || first === '}' || first === ']') {
+    if (map.slice(3, 6).includes(first)) {
       return false
     }
     
     const allBraces = []
     string.split('').forEach(symbol => {
-      if (
-        symbol === '(' || 
-        symbol === ')' ||
-        symbol === '{' ||
-        symbol === '}' ||
-        symbol === '[' ||
-        symbol === ']'
-      ) {
+      if (map.includes(symbol)) {
         allBraces.push(symbol)
       }
     })
@@ -29,11 +24,7 @@
     let flag = true
     const checker = []
     allBraces.forEach(brace => {
-      if (
-        brace === '(' ||
-        brace === '{' ||
-        brace === '['
-      ) {
+      if (map.slice(0, 3).includes(brace)) {
         checker.push(brace)
         return
       }
