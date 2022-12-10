@@ -1,14 +1,32 @@
 const columnsNode = document.querySelectorAll('.col')
+document.addEventListener('keydown', event => {
+  if (event.code === 'Space') {
+    setRandomColors()
+  }
+})
 
 function setRandomColors() {
   const hexMap = '0123456789ABCDEF'
   columnsNode.forEach(col => {
-    let hexColor = ['#']
+    hexColorArray = ['#']
     for (let i = 0; i < 6; i++) {
       randomHexSymbol = hexMap[Math.floor(Math.random() * 16)]
-      hexColor.push(randomHexSymbol)
+      hexColorArray.push(randomHexSymbol)
     }
-    col.style.background = hexColor.join('')
+    hexColor = hexColorArray.join('')
+
+    col.style.background = hexColor
+    columnText = col.querySelector('h2')
+    columnLock = col.querySelector('button')
+    columnText.textContent = hexColor
+    const luminance = chroma(hexColor).luminance()
+    if (luminance > 0.5) {
+      columnText.style.color = 'black'
+      columnLock.style.color = 'black'
+    } else {
+      columnText.style.color = 'white'
+      columnLock.style.color = 'white'
+    }
   })
 }
 
