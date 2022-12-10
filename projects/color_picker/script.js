@@ -5,6 +5,16 @@ document.addEventListener('keydown', event => {
   }
 })
 
+document.addEventListener('click', event => {
+  if (event.target.dataset.type === 'lock') {
+    const node = event.target.tagName.toLowerCase() === 'i'
+      ? event.target
+      : event.target.children[0]
+    node.classList.toggle('fa-lock')
+    node.classList.toggle('fa-lock-open')
+  }
+})
+
 function setRandomColors() {
   const hexMap = '0123456789ABCDEF'
   columnsNode.forEach(col => {
