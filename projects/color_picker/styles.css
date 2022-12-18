@@ -54,3 +54,14 @@ h1 {
 .col button:hover {
   background-color: RGBA(0, 0, 0, 0.1);
 }
+
+.clipboard-notification {
+  /* display: none; */
+  background-color: aqua;
+  position: absolute;
+  left: 43.5vw;
+  bottom: 50px;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 10px;
+}
