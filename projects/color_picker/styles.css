@@ -56,7 +56,6 @@ h1 {
 }
 
 .clipboard-notification {
-  /* display: none; */
   background-color: aqua;
   position: absolute;
   left: 43.5vw;
@@ -64,4 +63,14 @@ h1 {
   width: fit-content;
   padding: 10px;
   border-radius: 10px;
+}
+
+.clipboard-notification_hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.clipboard-notification_visible {
+  opacity: 1;
+  visibility: visible;
 }

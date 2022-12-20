@@ -1,5 +1,4 @@
 const columnsNode = document.querySelectorAll('.col')
-console.log(columnsNode);
 
 document.addEventListener('keydown', event => {
   event.preventDefault()
@@ -20,6 +19,10 @@ document.addEventListener('click', event => {
   if (event.target.dataset.type === 'text-to-clipboard') {
     const text = event.target.textContent
     copyToClipBoard(text)
+    openPopup()
+    setTimeout(() => {
+      closePopup()
+    }, 800);
   }
 })
 
