@@ -22,7 +22,7 @@ document.addEventListener('click', event => {
     openPopup()
     setTimeout(() => {
       closePopup()
-    }, 800);
+    }, 2000);
   }
 })
 
