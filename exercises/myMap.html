@@ -1,0 +1,26 @@
+<script>
+  const array1 = [1, 2, 3, 4, 5, 6, 7]
+  const array2 = [213, 24, 93, 1, -4, -97, 5]
+
+  Array.prototype.myMap = function(clbk) {
+    const result = []
+
+    for (let i = 0; i < this.length; i++) {
+      clbk(this[i], i, this)
+    }
+  }
+
+  const newArray1 = array1.myMap(el, i, arr => {
+    // return `Element ${el} with index ${i}. Elements left: ${arr.length - (i + 1)}`
+    return `Element ${el}`
+  });
+
+  const newArray2 = array2.myMap(el => {
+    // return `Element ${el} with index ${i}. Elements left: ${arr.length - (i + 1)}`
+    return `Element ${el}`
+  });
+
+  console.log(newArray1);
+  console.log(newArray2);
+
+</script>
