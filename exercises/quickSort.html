@@ -1,0 +1,32 @@
+<script>
+  const array1 = [3, 2, 10, 4, -4, -19, 29, 2, 26]
+
+  function quickSort(array) {
+    if (array.length <= 1) {
+      return array
+    }
+
+    let pivotIndex = Math.floor(array.length / 2)
+    let pivot = array[pivotIndex]
+
+    const less = []
+    const bigger = []
+
+    for (let i = 0; i < array.length; i++) {
+      if (i === pivotIndex) {
+        continue
+      }
+      if (array[i] > pivot) {
+        bigger.push(array[i])
+      } else {
+        less.push(array[i])
+      }       
+    }
+
+    return [...quickSort(less), pivot, ...quickSort(bigger)]
+  }
+
+  console.log('Original:', array1);
+  console.log('Sorted:', quickSort(array1));
+ 
+</script>

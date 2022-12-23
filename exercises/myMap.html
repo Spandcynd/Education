@@ -6,11 +6,13 @@
     const result = []
 
     for (let i = 0; i < this.length; i++) {
-      clbk(this[i], i, this)
+      result.push(clbk(this[i], i, this))
     }
+
+    return result
   }
 
-  const newArray1 = array1.myMap(el, i, arr => {
+  const newArray1 = array1.myMap((el, i, arr) => {
     // return `Element ${el} with index ${i}. Elements left: ${arr.length - (i + 1)}`
     return `Element ${el}`
   });
