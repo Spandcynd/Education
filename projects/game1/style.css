@@ -4,24 +4,6 @@
   margin: 0;
 }
 
-.vertical {
-  color: #ffffff;
-}
-
-.horizontal {
-  display: flex;
-  color: #ffffff;
-  position: absolute;
-  left: 550px;
-  top: 165px;
-}
-
-.vertical div, .horizontal div {
-  width: 20px;
-  height: 20px;
-  text-align: center;
-}
-
 body {
   background-color: #111111;
 }
