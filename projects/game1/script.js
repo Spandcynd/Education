@@ -1,18 +1,5 @@
 const rowsNode = document.querySelectorAll('.row')
 
-const playground = [
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-]
-
 const playerPosition = {
   x: 0,
   y: 0
@@ -25,17 +12,19 @@ document.addEventListener('keydown', event => {
       y: playerPosition.y + 1
     }
 
+    const row = rowsNode[Math.abs(nextPosition.y)]
+    const nextDOMObject = row.children[nextPosition.x]
+
     if (isOutOfPlayground(nextPosition)) {
       console.log('End of map')
-    } else if (isObstacle(nextPosition)) {
+    } else if (isObstacle(nextDOMObject)) {
       console.log('There is obstacle');
     } else {
       move('up')
-      console.log(playerPosition)
-      render(playerPosition)
+      render(nextDOMObject)
     }
 
-    if (isFinish(playerPosition)) {
+    if (isFinish(nextDOMObject)) {
       setTimeout(() => {
         alert('You win!')
         restart()
@@ -50,18 +39,20 @@ document.addEventListener('keydown', event => {
       x: playerPosition.x - 1,
       y: playerPosition.y 
     }
+
+    const row = rowsNode[Math.abs(nextPosition.y)]
+    const nextDOMObject = row.children[nextPosition.x]
     
     if (isOutOfPlayground(nextPosition)) {
       console.log('End of map')
-    } else if (isObstacle(nextPosition)) {
+    } else if (isObstacle(nextDOMObject)) {
       console.log('There is obstacle');
     } else {
       move('left')
-      console.log(playerPosition)
-      render(playerPosition)
+      render(nextDOMObject)
     }
 
-    if (isFinish(playerPosition)) {
+    if (isFinish(nextDOMObject)) {
       setTimeout(() => {
         alert('You win!')
         restart()
@@ -76,18 +67,20 @@ document.addEventListener('keydown', event => {
       x: playerPosition.x,
       y: playerPosition.y - 1
     }
+
+    const row = rowsNode[Math.abs(nextPosition.y)]
+    const nextDOMObject = row.children[nextPosition.x]
     
     if (isOutOfPlayground(nextPosition)) {
       console.log('End of map')
-    } else if (isObstacle(nextPosition)) {
+    } else if (isObstacle(nextDOMObject)) {
       console.log('There is obstacle');
     } else {
       move('down')
-      console.log(playerPosition)
-      render(playerPosition)
+      render(nextDOMObject)
     }
 
-    if (isFinish(playerPosition)) {
+    if (isFinish(nextDOMObject)) {
       setTimeout(() => {
         alert('You win!')
         restart()
@@ -102,18 +95,20 @@ document.addEventListener('keydown', event => {
       x: playerPosition.x + 1,
       y: playerPosition.y
     }
+
+    const row = rowsNode[Math.abs(nextPosition.y)]
+    const nextDOMObject = row.children[nextPosition.x]
     
     if (isOutOfPlayground(nextPosition)) {
       console.log('End of map')
-    } else if (isObstacle(nextPosition)) {
+    } else if (isObstacle(nextDOMObject)) {
       console.log('There is obstacle');
     } else {
       move('right')
-      console.log(playerPosition)
-      render(playerPosition)
+      render(nextDOMObject)
     }
 
-    if (isFinish(playerPosition)) {
+    if (isFinish(nextDOMObject)) {
       setTimeout(() => {
         alert('You win!')
         restart()
@@ -146,51 +141,48 @@ function move(direction) {
   }
 }
 
-function isOutOfPlayground(nextPosition) {
+function isOutOfPlayground(position) {
   if (
-    nextPosition.y === 1 || 
-    nextPosition.y === -10 ||
-    nextPosition.x === -1 ||
-    nextPosition.x === 10
+    position.y === 1 || 
+    position.y === -10 ||
+    position.x === -1 ||
+    position.x === 10
   ) {
     return true
   }
+
   return false
 }
 
-function isObstacle(nextPosition) {
-  const row = rowsNode[Math.abs(nextPosition.y)]
-  const element = row.children[nextPosition.x]
-
-  if (element.className === 'cell wall') {
-    return true
-  }
-  return false
-}
-
-function isFinish(playerPosition) {
-  const row = rowsNode[Math.abs(playerPosition.y)]
-  const element = row.children[playerPosition.x]
-
-  if (element.className === 'cell finish') {
+function isObstacle(DOMObject) {
+  if (DOMObject.className === 'cell wall') {
     return true
   }
 
   return false
 }
 
-function render(playerPosition) {
+function isFinish(DOMObject) {
+  if (DOMObject.className === 'cell finish') {
+    return true
+  }
+
+  return false
+}
+
+function render(DOMObject) {
   const playerNode = document.querySelector('.player')
   playerNode.remove()
 
-  const row = rowsNode[Math.abs(playerPosition.y)]
-  const element = row.children[playerPosition.x]
-  element.innerHTML = playerNode.outerHTML
+  DOMObject.innerHTML = playerNode.outerHTML
 }
 
 function restart() {
   playerPosition.x = 0
   playerPosition.y = 0
 
-  render(playerPosition)
+  const row = rowsNode[playerPosition.y]
+  const startDOMObject = row.children[playerPosition.x]
+
+  render(startDOMObject)
 }
