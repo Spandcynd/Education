@@ -135,12 +135,11 @@ function calculate(nextPosition, direction) {
   } else {
     move(direction)
     render(nextDOMObject)
-  }
-
-  if (isFinish(nextDOMObject)) {
-    setTimeout(() => {
-      alert('You win!')
-      restart()
-    }, 200)
+    if (isFinish(nextDOMObject)) {
+      setTimeout(() => {
+        alert('You win!')
+        restart()
+      }, 200)
+    }
   }
 }
