@@ -11,25 +11,9 @@ document.addEventListener('keydown', event => {
       x: playerPosition.x,
       y: playerPosition.y + 1
     }
+    const direction = 'up'
 
-    const row = rowsNode[Math.abs(nextPosition.y)]
-    const nextDOMObject = row.children[nextPosition.x]
-
-    if (isOutOfPlayground(nextPosition)) {
-      console.log('End of map')
-    } else if (isObstacle(nextDOMObject)) {
-      console.log('There is obstacle');
-    } else {
-      move('up')
-      render(nextDOMObject)
-    }
-
-    if (isFinish(nextDOMObject)) {
-      setTimeout(() => {
-        alert('You win!')
-        restart()
-      }, 200)
-    }
+    calculate(nextPosition, direction)
 
     return
   }
@@ -39,25 +23,9 @@ document.addEventListener('keydown', event => {
       x: playerPosition.x - 1,
       y: playerPosition.y 
     }
+    const direction = 'left'
 
-    const row = rowsNode[Math.abs(nextPosition.y)]
-    const nextDOMObject = row.children[nextPosition.x]
-    
-    if (isOutOfPlayground(nextPosition)) {
-      console.log('End of map')
-    } else if (isObstacle(nextDOMObject)) {
-      console.log('There is obstacle');
-    } else {
-      move('left')
-      render(nextDOMObject)
-    }
-
-    if (isFinish(nextDOMObject)) {
-      setTimeout(() => {
-        alert('You win!')
-        restart()
-      }, 200)
-    }
+    calculate(nextPosition, direction)
 
     return
   }
@@ -67,25 +35,9 @@ document.addEventListener('keydown', event => {
       x: playerPosition.x,
       y: playerPosition.y - 1
     }
+    const direction = 'down'
 
-    const row = rowsNode[Math.abs(nextPosition.y)]
-    const nextDOMObject = row.children[nextPosition.x]
-    
-    if (isOutOfPlayground(nextPosition)) {
-      console.log('End of map')
-    } else if (isObstacle(nextDOMObject)) {
-      console.log('There is obstacle');
-    } else {
-      move('down')
-      render(nextDOMObject)
-    }
-
-    if (isFinish(nextDOMObject)) {
-      setTimeout(() => {
-        alert('You win!')
-        restart()
-      }, 200)
-    }
+    calculate(nextPosition, direction)
     
     return
   }
@@ -96,24 +48,9 @@ document.addEventListener('keydown', event => {
       y: playerPosition.y
     }
 
-    const row = rowsNode[Math.abs(nextPosition.y)]
-    const nextDOMObject = row.children[nextPosition.x]
-    
-    if (isOutOfPlayground(nextPosition)) {
-      console.log('End of map')
-    } else if (isObstacle(nextDOMObject)) {
-      console.log('There is obstacle');
-    } else {
-      move('right')
-      render(nextDOMObject)
-    }
+    const direction = 'right'
 
-    if (isFinish(nextDOMObject)) {
-      setTimeout(() => {
-        alert('You win!')
-        restart()
-      }, 200)
-    }
+    calculate(nextPosition, direction)
     
     return
   }
@@ -185,4 +122,25 @@ function restart() {
   const startDOMObject = row.children[playerPosition.x]
 
   render(startDOMObject)
+}
+
+function calculate(nextPosition, direction) {
+  const row = rowsNode[Math.abs(nextPosition.y)]
+  const nextDOMObject = row.children[nextPosition.x]
+
+  if (isOutOfPlayground(nextPosition)) {
+    console.log('End of map')
+  } else if (isObstacle(nextDOMObject)) {
+    console.log('There is obstacle');
+  } else {
+    move(direction)
+    render(nextDOMObject)
+  }
+
+  if (isFinish(nextDOMObject)) {
+    setTimeout(() => {
+      alert('You win!')
+      restart()
+    }, 200)
+  }
 }
