@@ -1,7 +1,7 @@
 const mazeNode = document.querySelector('.maze')
 const context = mazeNode.getContext('2d')
 
-let current
+let currentCell
 
 class Maze {
   constructor(size, rows, columns) {
@@ -21,20 +21,47 @@ class Maze {
       }
       this.grid.push(row)
     }
-    current = this.grid[0][0]
+    currentCell = this.grid[0][0]
   }
 
   draw() {
     mazeNode.height = this.size
     mazeNode.width = this.size
     mazeNode.style.background = 'black'
-    current.visited = true
+    currentCell.visited = true
 
     for (let r = 0; r < this.rows; r++) {
       for (let c = 0; c < this.columns; c++) {
         this.grid[r][c].show(this.size, this.columns, this.rows)
       }
     }
+
+    const nextCell = currentCell.nextRandomNeighbour()
+
+    if (nextCell) {
+      nextCell.visited = true
+
+      this.stack.push(currentCell)
+
+      currentCell.highlight(this.columns, this.rows)
+
+      currentCell.removeWalls(currentCell, nextCell)
+
+      currentCell = nextCell
+
+    } else if (this.stack.length > 0) {
+      const previousCell = this.stack.pop()
+      currentCell = previousCell
+      currentCell.highlight(this.columns, this.rows)
+    }
+    
+    if (this.stack.length === 0) {
+      return
+    }
+
+    window.requestAnimationFrame(() => {
+      this.draw()
+    })
   }
 }
 
@@ -51,6 +78,30 @@ class Cell {
       rightWall: true,
       bottomWall: true,
       leftWall: true
+    }
+  }
+
+  nextRandomNeighbour() {
+    const grid = this.parentGrid
+    const col = this.colNum
+    const row = this.rowNum
+    const neighbours = []
+
+    const topNeighbour = row !== 0 ? grid[row - 1][col] : undefined
+    const rightNeighbour = col !== grid.length - 1 ? grid[row][col + 1] : undefined
+    const bottomNeighbour = row !== grid.length - 1 ? grid[row + 1][col] : undefined
+    const leftNeighbour = col !== 0 ? grid[row][col - 1] : undefined
+
+    if (topNeighbour && !topNeighbour.visited) neighbours.push(topNeighbour)
+    if (rightNeighbour && !rightNeighbour.visited) neighbours.push(rightNeighbour)
+    if (bottomNeighbour && !bottomNeighbour.visited) neighbours.push(bottomNeighbour)
+    if (leftNeighbour && !leftNeighbour.visited) neighbours.push(leftNeighbour)
+    
+    if (neighbours.length > 0) {
+      const randomNeighbourIndex = Math.floor(Math.random() * neighbours.length)
+      return neighbours[randomNeighbourIndex]
+    } else {
+      return undefined
     }
   }
 
@@ -82,6 +133,28 @@ class Cell {
     context.stroke()
   }
 
+  removeWalls(cell1, cell2) {
+    const x = cell1.colNum - cell2.colNum
+    if (x === -1) {
+      cell1.walls.rightWall = false
+      cell2.walls.leftWall = false
+    }
+    if (x === 1) {
+      cell1.walls.leftWall = false
+      cell2.walls.rightWall = false
+    }
+
+    const y = cell1.rowNum - cell2.rowNum
+    if (y === -1) {
+      cell1.walls.bottomWall = false
+      cell2.walls.topWall = false
+    }
+    if (y === 1) {
+      cell1.walls.topWall = false
+      cell2.walls.bottomWall = false
+    }
+  }
+
   show(size, columns, rows) {
     const x = this.colNum * size / columns
     const y = this.rowNum * size / rows
@@ -98,11 +171,20 @@ class Cell {
       context.fillRect(x + 1, y + 1, size / columns - 2, size / rows - 2)
     }
   }
+
+  highlight(columns, rows) {
+    const x = this.colNum * this.parentSize / columns + 1
+    const y = this.rowNum * this.parentSize / rows + 1
+
+    context.fillStyle = 'purple'
+    context.fillRect(x, y, this.parentSize / columns - 3, this.parentSize / rows - 3)
+  }
 }
 
-// const mazeSmall = new Maze(500, 5, 5)
-const mazeMedium = new Maze(500, 10, 10)
-// const mazeBig = new Maze(500, 20, 20)
+// Uncomment only one maze
+// const maze = new Maze(500, 5, 5)
+// const maze = new Maze(500, 10, 10)
+// const maze = new Maze(500, 20, 20)
 
-mazeMedium.setup()
-mazeMedium.draw()
+maze.setup()
+maze.draw()
