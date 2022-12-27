@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stack visualisation</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      align-items: center;
+    }
+
+    button {
+      width: 100px;
+      height: 40px;
+      font-size: 30px;
+    }
+
+    .box {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: flex-start;
+      box-sizing: content-box;
+      height: 200px;
+      width: 300px;
+      border: 5px solid #ad9e38;
+      border-top: none;
+      background-color: #584b1d;
+    }
+
+    .item {
+      height: 20px;
+      width: 100px;
+      border: 2px solid;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="push()" class="push">Push</button>
+  <div class="box"></div>
+  <button onclick="pop()" class="pop">Pop</button>
+
+  <script>
+    const boxNode = document.querySelector('.box');
+    
+    const stack = []
+
+    function createItem() {
+      const hexMap = '0123456789ABCDEF'
+
+      let hexColor1 = ['#']
+      for (let i = 0; i < 6; i++) {
+        const randomHexSymbol = hexMap[Math.floor(Math.random() * 15)]
+        hexColor1.push(randomHexSymbol)
+      }
+      hexColor1 = hexColor1.join('')
+
+      let hexColor2 = ['#']
+      for (let i = 0; i < 6; i++) {
+        const randomHexSymbol = hexMap[Math.floor(Math.random() * 15)]
+        hexColor2.push(randomHexSymbol)
+      }
+      hexColor2 = hexColor2.join('')
+
+      return `<div class="item" style="border-color: ${hexColor1}; background-color: ${hexColor2};"></div>`
+    }
+
+    function isCallStackSizeExceeded() {
+      if (stack.length === 10) {
+        return true
+      }
+      return false
+    }
+
+    function push() {
+      if (isCallStackSizeExceeded()) {
+        alert('Maximum call stack size exceeded!')
+        return
+      }
+
+      const item = createItem()
+      stack.push(item)
+      render()
+    }
+
+    function pop() {
+      stack.pop()
+      render()
+    }
+
+    function render() {
+      boxNode.innerHTML = ''
+      for (let i = 0; i < stack.length; i++) {
+        boxNode.innerHTML += stack[i]
+      }
+    }
+  </script>
+</body>
+</html>
