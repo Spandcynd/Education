@@ -24,6 +24,10 @@
     let flag = true
     const checker = []
     allBraces.forEach(brace => {
+      if (!flag) {
+        return
+      }
+
       if (map.slice(0, 3).includes(brace)) {
         checker.push(brace)
         return
