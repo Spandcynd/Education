@@ -4,21 +4,21 @@
 
     if (string[0] === ')') return false
 
-    const checker = []
+    const stack = []
     for (let i = 0; i < string.length; i++) {
       const brace = string[i]
 
       if (brace === '(') {
-        checker.push(brace)
+        stack.push(brace)
         continue
       }
 
-      if (!checker.length) return false
+      if (!stack.length) return false
 
-      checker.pop()
+      stack.pop()
     }
 
-    return !checker.length
+    return !stack.length
   }
 
   console.log('false', isBalanced(''))
