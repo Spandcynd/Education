@@ -20,32 +20,32 @@
         allBraces.push(symbol)
       }
     })
+
+    if (!allBraces.length) return false
     
-    let flag = true
     const checker = []
-    allBraces.forEach(brace => {
-      if (!flag) {
-        return
-      }
+    for (let i = 0; i < allBraces.length; i++) {
+      const brace = allBraces[i]
 
       if (map.slice(0, 3).includes(brace)) {
         checker.push(brace)
-        return
+        continue
       }
      
-      poped = checker.pop()
+      const poped = checker.pop()
       if (
         poped + brace !== '()' &&
         poped + brace !== '{}' &&
         poped + brace !== '[]'
       ) {
-        flag = false
-        return
+        return false      
       }
-    })
-    return flag && !checker.length
+    }
+
+    return !checker.length
   }
   
+  console.log(isBalanced(''))
   console.log(isBalanced('(x + 2) - [3]'))
   console.log(isBalanced('(({[{}]}))('))
   console.log(isBalanced('(2 + 7{)}'))
