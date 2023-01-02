@@ -1,0 +1,31 @@
+<script>
+  function isBalanced(string) {
+    if (!string) return false
+
+    if (string[0] === ')') return false
+
+    const checker = []
+    for (let i = 0; i < string.length; i++) {
+      const brace = string[i]
+
+      if (brace === '(') {
+        checker.push(brace)
+        continue
+      }
+
+      if (!checker.length) return false
+
+      checker.pop()
+    }
+
+    return !checker.length
+  }
+
+  console.log('false', isBalanced(''))
+  console.log('false', isBalanced('('))
+  console.log('false', isBalanced(')('))
+  console.log('true', isBalanced('()'))
+  console.log('true', isBalanced('((()))'))
+  console.log('false', isBalanced('((())))'))
+  console.log('false', isBalanced('((((())))'))
+</script>
