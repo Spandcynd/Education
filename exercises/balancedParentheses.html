@@ -13,9 +13,9 @@
         continue
       }
 
-      if (!stack.length) return false
+      const el = stack.pop()
 
-      stack.pop()
+      if (el === undefined) return false
     }
 
     return !stack.length
