@@ -1,0 +1,148 @@
+<script>
+  class Node {
+    constructor(item, next = null) {
+      this.item = item;
+      this.next = next;
+    }
+  }
+
+  class LinkedList {
+    constructor() {
+      this.head = null;
+      this.tail = null;
+    }
+
+    append(item) {
+      const node = new Node(item);
+
+      if (this.tail) {
+        this.tail.next = node;
+      }
+
+      if (!this.head) {
+        this.head = node;
+      }
+
+      this.tail = node;
+    }
+
+    prepend(item) {
+      const node = new Node(item);
+
+      if (this.head) {
+        node.next = this.head;
+      }
+
+      if (!this.tail) {
+        this.tail = node;
+      }
+
+      this.head = node;
+    }
+
+    find(item) {
+      let node = this.head;
+      let i = 0;
+
+      while (node) {
+        if (node.item === item) {
+          return i;
+        } else {
+          node = node.next;
+        }
+        i++;
+      }
+
+      return -1;
+    } 
+
+    findAll(item) {
+      let node = this.head;
+      let i = 0;
+
+      const array = [];
+
+      while (node) {
+        if (node.item === item) {
+          array.push(i);
+        }
+
+        node = node.next;
+        i++;
+      }
+
+      return array;
+    }
+
+    insertAfterItem(foundItem, newItem) {
+      const newNode = new Node(newItem)
+      let node = this.head;
+
+      while (node) {
+        if (node.item === foundItem) {
+          newNode.next = node.next;
+          node.next = newNode;
+          return;
+        } else {
+          node = node.next;
+        }
+      }
+
+      return -1;
+    }
+
+    insertAfterIndex(foundIndex, newItem) {
+      const newNode = new Node(newItem)
+      let node = this.head;
+      let i = 0;
+
+      while (node) {
+        if (i === foundIndex) {
+          newNode.next = node.next;
+          node.next = newNode;
+          return;
+        } else {
+          node = node.next;
+          i++;
+        }
+      }
+
+      return -1;
+    }
+
+    toArray() {
+      const array = [];
+      let node = this.head;
+
+      while (node) {
+        array.push(node.item);
+        node = node.next;
+      };
+
+      return array;
+    }
+  }
+
+  const list = new LinkedList();
+  // list.append('42');
+  // list.append('50');
+  // list.prepend('30');
+  // list.prepend('5');
+
+  const items = [1, 4, 2, 7, 4, 12, 19, 17, 35, 4, 89]
+
+  for (let i = 0; i < items.length; i++) {
+    list.append(items[i])
+  }
+  
+  console.log(list.toArray());
+  console.log(list.find(4));
+  console.log(list.findAll(4));
+  // console.log(list.insertAfterItem(1, 5));
+  // console.log(list.toArray());
+  console.log(list.insertAfterIndex(0, 666));
+  console.log(list.toArray());
+
+  const emptyList = new LinkedList();
+
+</script>

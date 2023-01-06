@@ -1,0 +1,35 @@
+<script>
+  // console.log(1.797693e+308)
+
+  const myObj = {
+    name: 'Maxim',
+    age: 19,
+    isProgrammer: false
+  }
+
+  const proxy = new Proxy(myObj, {
+    get(target, prop) {
+      if (prop in target) {
+        return target[prop]
+      } else {
+        return prop.split('_').map(el => target[el]).join(' ')
+      }
+    },
+    set(target, prop, value) {
+      if (prop in target) {
+        target[prop] = value
+      } else {
+        console.error('no prop')
+      }
+    },
+    has(target, prop) {
+      if (prop in target) {
+        console.log('There is such prop')
+        return true
+      } else {
+        console.log('There is no such prop')
+        return false
+      }
+    }
+  })
+</script>
